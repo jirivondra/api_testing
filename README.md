@@ -4,12 +4,12 @@ A showcase of integration testing for a custom REST API. The project includes a 
 
 ## Stack
 
-| Layer | Technology |
-|---|---|
-| API | Python, FastAPI |
-| Test runner | Jest |
-| HTTP requests | Frisby |
-| Schema validation | Joi |
+| Layer             | Technology      |
+| ----------------- | --------------- |
+| API               | Python, FastAPI |
+| Test runner       | Jest            |
+| HTTP requests     | Frisby          |
+| Schema validation | Joi             |
 
 ## Project structure
 
@@ -67,13 +67,13 @@ API_URL=http://localhost:9000 npm test
 
 ## API endpoints
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/todos` | List all todos |
-| POST | `/todos` | Create a new todo |
-| GET | `/todos/:id` | Get a todo by ID |
-| PUT | `/todos/:id` | Update a todo |
-| DELETE | `/todos/:id` | Delete a todo |
+| Method | Endpoint     | Description       |
+| ------ | ------------ | ----------------- |
+| GET    | `/todos`     | List all todos    |
+| POST   | `/todos`     | Create a new todo |
+| GET    | `/todos/:id` | Get a todo by ID  |
+| PUT    | `/todos/:id` | Update a todo     |
+| DELETE | `/todos/:id` | Delete a todo     |
 
 ## Test architecture
 
@@ -82,7 +82,7 @@ API_URL=http://localhost:9000 npm test
 `TodoPage` encapsulates all HTTP calls. Each method returns `this`, enabling fluent chaining of assertions:
 
 ```js
-(await todoPage.create({ title: 'New todo' }))
+;(await todoPage.create({ title: 'New todo' }))
   .expectStatus(statusCodes.created)
   .expectJsonValue('title', 'New todo')
 ```
