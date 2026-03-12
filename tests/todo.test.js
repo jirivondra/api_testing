@@ -102,3 +102,46 @@ describe('TODO API – DELETE /todos/:id', () => {
       .expectStatus(statusCodes.notFound)
   })
 })
+
+describe('TODO API – full lifecycle', () => {
+  let todoId
+
+  it('POST → creates a new TODO', async () => {
+    (await todoPage.create(testData.withDescription))
+      .expectStatus(statusCodes.created)
+      .expectJsonValue('title', testData.withDescription.title)
+      .expectJsonValue('completed', testData.withDescription.completed)
+    todoId = todoPage.json.id
+  })
+
+  it('GET → newly created TODO is available', async () => {
+    (await todoPage.getById(todoId))
+      .expectStatus(statusCodes.ok)
+      .expectJsonValue('id', todoId)
+      .expectJsonValue('title', testData.withDescription.title)
+  })
+
+  it('PUT → updates the TODO', async () => {
+    (await todoPage.update(todoId, testData.updated))
+      .expectStatus(statusCodes.ok)
+      .expectJsonValue('title', testData.updated.title)
+      .expectJsonValue('completed', testData.updated.completed)
+  })
+
+  it('GET → reflects the updated values', async () => {
+    (await todoPage.getById(todoId))
+      .expectStatus(statusCodes.ok)
+      .expectJsonValue('title', testData.updated.title)
+      .expectJsonValue('completed', testData.updated.completed)
+  })
+
+  it('DELETE → removes the TODO', async () => {
+    (await todoPage.delete(todoId))
+      .expectStatus(statusCodes.noContent)
+  })
+
+  it('GET → deleted TODO returns 404', async () => {
+    (await todoPage.getById(todoId))
+      .expectStatus(statusCodes.notFound)
+  })
+})
