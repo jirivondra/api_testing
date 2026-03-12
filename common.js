@@ -19,5 +19,7 @@ export function makeRequest(apiUri, method = 'GET', body = {}) {
 
   frisbyRequest = (methodHandlers[method] ?? methodHandlers.GET)(frisbyRequest)
 
-  return frisbyRequest.then((response) => new ApiResponse({ status: response.status, json: response.json }))
+  return frisbyRequest.then(
+    (response) => new ApiResponse({ status: response.status, json: response.json })
+  )
 }

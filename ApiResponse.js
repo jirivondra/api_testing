@@ -29,4 +29,15 @@ export class ApiResponse {
     expect(this.json[key]).toBe(value)
     return this
   }
+
+  /**
+   * Asserts that the response JSON matches the given Joi schema.
+   * @param {import('joi').Schema} schema - Joi schema to validate against
+   * @returns {ApiResponse}
+   */
+  expectSchema(schema) {
+    const { error } = schema.validate(this.json)
+    expect(error).toBeUndefined()
+    return this
+  }
 }
