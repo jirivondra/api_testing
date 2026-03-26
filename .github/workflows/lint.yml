@@ -1,0 +1,42 @@
+# Název workflow — zobrazí se na GitHubu v záložce "Actions"
+name: Lint
+
+# "on" říká GitHubu: kdy má tento workflow spustit
+on:
+  push:
+    branches: ["**"] # spustí se při každém push na jakoukoliv branch
+  pull_request:
+    branches: ["**"] # spustí se i při otevření/aktualizaci Pull Requestu
+
+# "jobs" jsou skupiny kroků — může jich být víc a běžet paralelně
+jobs:
+  lint:
+    # Název jobu — zobrazí se v detailu workflow
+    name: ESLint
+
+    # Na jakém operačním systému poběží virtuální stroj
+    runs-on: ubuntu-latest
+
+    # "steps" jsou jednotlivé kroky — běží sekvenčně (jeden po druhém)
+    steps:
+      # Krok 1: Stáhne váš kód do virtuálního stroje
+      # "uses" znamená: použij hotovou akci z GitHub Marketplace
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Krok 2: Nainstaluje Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # verze Node.js
+          cache: "npm" # uloží node_modules do cache → příště rychlejší
+
+      # Krok 3: Nainstaluje závislosti z package.json
+      # "ci" je jako "install", ale přísnější — používá přesně package-lock.json
+      - name: Install dependencies
+        run: npm ci
+
+      # Krok 4: Spustí lint — příkaz definovaný v package.json jako "lint"
+      # Pokud ESLint najde chybu, vrátí exit code != 0 → workflow selže (červená)
+      - name: Run ESLint
+        run: npm run lint
