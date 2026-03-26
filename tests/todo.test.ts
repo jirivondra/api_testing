@@ -46,11 +46,11 @@ describe('TODO API – POST /todos', () => {
 })
 
 describe('TODO API – GET /todos/:id', () => {
-  let createdId
+  let createdId: number
 
   beforeAll(async () => {
     await todoPage.create(testData.forGetTest)
-    createdId = todoPage.json.id
+    createdId = todoPage.json.id as number
   })
 
   it('returns a specific TODO with status 200', async () => {
@@ -66,11 +66,11 @@ describe('TODO API – GET /todos/:id', () => {
 })
 
 describe('TODO API – PUT /todos/:id', () => {
-  let createdId
+  let createdId: number
 
   beforeAll(async () => {
     await todoPage.create(testData.forUpdateTest)
-    createdId = todoPage.json.id
+    createdId = todoPage.json.id as number
   })
 
   it('updates a TODO and returns status 200', async () => {
@@ -89,11 +89,11 @@ describe('TODO API – PUT /todos/:id', () => {
 })
 
 describe('TODO API – DELETE /todos/:id', () => {
-  let createdId
+  let createdId: number
 
   beforeAll(async () => {
     await todoPage.create(testData.forDeleteTest)
-    createdId = todoPage.json.id
+    createdId = todoPage.json.id as number
   })
 
   it('deletes a TODO and returns status 204', async () => {
@@ -106,14 +106,14 @@ describe('TODO API – DELETE /todos/:id', () => {
 })
 
 describe('TODO API – full lifecycle', () => {
-  let todoId
+  let todoId: number
 
   it('POST → creates a new TODO', async () => {
     ;(await todoPage.create(testData.withDescription))
       .expectStatus(statusCodes.created)
       .expectJsonValue('title', testData.withDescription.title)
       .expectJsonValue('completed', testData.withDescription.completed)
-    todoId = todoPage.json.id
+    todoId = todoPage.json.id as number
   })
 
   it('GET → newly created TODO is available', async () => {
