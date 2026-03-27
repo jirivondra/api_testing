@@ -23,5 +23,21 @@ jobs:
       - name: Check code style with ESLint
         run: npx --no-install eslint .
 
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: rm -f package-lock.json && npm install
+
       - name: Check code formatting with Prettier
         run: npx --no-install prettier --check .
