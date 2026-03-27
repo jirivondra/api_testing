@@ -1,6 +1,6 @@
 # TODO API – Integration Tests
 
-A showcase of integration testing for a custom REST API. The project includes a FastAPI backend and a test suite built on Jest, Frisby and Joi.
+A showcase of integration testing for a custom REST API. The project includes a FastAPI backend and a test suite built on Jest, Pactum and Joi.
 
 ## Stack
 
@@ -8,7 +8,7 @@ A showcase of integration testing for a custom REST API. The project includes a 
 | ----------------- | --------------- |
 | API               | Python, FastAPI |
 | Test runner       | Jest            |
-| HTTP requests     | Frisby          |
+| HTTP requests     | Pactum          |
 | Schema validation | Joi             |
 
 ## Project structure
@@ -21,7 +21,7 @@ A showcase of integration testing for a custom REST API. The project includes a 
     ├── pages/
     │   └── TodoPage.js   # Page Object – HTTP methods + fluent assertions
     ├── ApiResponse.js    # Fluent wrapper for HTTP responses
-    ├── common.js         # makeRequest – shared HTTP calls via Frisby
+    ├── common.js         # makeRequest – shared HTTP calls via Pactum
     ├── schemas.js        # Joi schemas for response validation
     ├── utils.js          # buildUrl helper
     └── todo.test.js      # Integration tests
