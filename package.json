@@ -5,12 +5,12 @@
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/jest",
-    "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
-    "test:verbose": "node --experimental-vm-modules node_modules/.bin/jest --verbose",
+    "test-watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
+    "test-verbose": "node --experimental-vm-modules node_modules/.bin/jest --verbose",
     "lint": "node_modules/.bin/eslint .",
-    "lint:fix": "node_modules/.bin/eslint . --fix",
+    "lint-fix": "node_modules/.bin/eslint . --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format-check": "prettier --check ."
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
