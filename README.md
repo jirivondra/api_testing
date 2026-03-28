@@ -19,12 +19,12 @@ A showcase of integration testing for a custom REST API. The project includes a 
 │   └── requirements.txt
 └── tests/
     ├── pages/
-    │   └── TodoPage.js   # Page Object – HTTP methods + fluent assertions
-    ├── ApiResponse.js    # Fluent wrapper for HTTP responses
-    ├── common.js         # makeRequest – shared HTTP calls via Pactum
-    ├── schemas.js        # Joi schemas for response validation
-    ├── utils.js          # buildUrl helper
-    └── todo.test.js      # Integration tests
+    │   └── TodoPage.ts   # Page Object – HTTP methods + fluent assertions
+    ├── ApiResponse.ts    # Fluent wrapper for HTTP responses
+    ├── common.ts         # makeRequest – shared HTTP calls via Pactum
+    ├── schemas.ts        # Joi schemas for response validation
+    ├── utils.ts          # buildUrl helper
+    └── todo.test.ts      # Integration tests
 ```
 
 ## Setup
@@ -39,31 +39,58 @@ npm install
 pip install -r api/requirements.txt
 ```
 
-### 2. Start the API
+### 2. Install Task
+
+This project uses [Task](https://taskfile.dev) as a task runner. Install it via:
 
 ```bash
-python3 api/main.py
+# macOS
+brew install go-task
+
+# Windows
+winget install Task.Task
+
+# Linux
+sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+```
+
+## Running the project
+
+### Start the API
+
+```bash
+task run-api
 ```
 
 The API runs on `http://localhost:8000`. Swagger docs are available at `http://localhost:8000/docs`.
 
-### 3. Run tests
+### Run tests
 
 ```bash
-npm test
-```
-
-For verbose output:
-
-```bash
-npm run test:verbose
+task run-test          # run all tests
+task test-watch        # run in watch mode
+task test-result       # run with verbose output
 ```
 
 ### Custom API URL
 
 ```bash
-API_URL=http://localhost:9000 npm test
+API_URL=http://localhost:9000 task run-test
 ```
+
+## Taskfile commands
+
+| Command             | Description                         |
+| ------------------- | ----------------------------------- |
+| `task run-api`      | Start the FastAPI backend           |
+| `task run-test`     | Run all tests                       |
+| `task test-watch`   | Run tests in watch mode             |
+| `task test-result`  | Run tests with verbose output       |
+| `task lint`         | Check code with ESLint              |
+| `task lint-fix`     | Auto-fix lint issues                |
+| `task format-check` | Check code formatting with Prettier |
+| `task check`        | Run all checks (ESLint + Prettier)  |
+| `task fix`          | Auto-fix formatting and lint issues |
 
 ## API endpoints
 
@@ -81,7 +108,7 @@ API_URL=http://localhost:9000 npm test
 
 `TodoPage` encapsulates all HTTP calls. Each method returns `this`, enabling fluent chaining of assertions:
 
-```js
+```ts
 ;(await todoPage.create({ title: 'New todo' }))
   .expectStatus(statusCodes.created)
   .expectJsonValue('title', 'New todo')
@@ -93,4 +120,4 @@ All test data is defined in a `testData` object at the top of the test file — 
 
 ### Schemas
 
-Joi schemas in `schemas.js` define the expected structure and types of API responses.
+Joi schemas in `schemas.ts` define the expected structure and types of API responses.
