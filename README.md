@@ -80,17 +80,17 @@ API_URL=http://localhost:9000 task run-test
 
 ## Taskfile commands
 
-| Command | Description |
-| --- | --- |
-| `task run-api` | Start the FastAPI backend |
-| `task run-test` | Run all tests |
-| `task test-watch` | Run tests in watch mode |
-| `task test-result` | Run tests with verbose output |
-| `task lint` | Check code with ESLint |
-| `task lint-fix` | Auto-fix lint issues |
+| Command             | Description                         |
+| ------------------- | ----------------------------------- |
+| `task run-api`      | Start the FastAPI backend           |
+| `task run-test`     | Run all tests                       |
+| `task test-watch`   | Run tests in watch mode             |
+| `task test-result`  | Run tests with verbose output       |
+| `task lint`         | Check code with ESLint              |
+| `task lint-fix`     | Auto-fix lint issues                |
 | `task format-check` | Check code formatting with Prettier |
-| `task check` | Run all checks (ESLint + Prettier) |
-| `task fix` | Auto-fix formatting and lint issues |
+| `task check`        | Run all checks (ESLint + Prettier)  |
+| `task fix`          | Auto-fix formatting and lint issues |
 
 ## API endpoints
 
