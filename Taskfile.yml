@@ -1,0 +1,45 @@
+version: '3'
+
+tasks:
+  # --- API ---
+  run-api:
+    desc: Start the FastAPI backend
+    cmd: uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
+
+  # --- Tests ---
+  run-test:
+    desc: Run all tests
+    cmd: npm run test
+
+  test-watch:
+    desc: Run tests in watch mode
+    cmd: npm run test-watch
+
+  test-result:
+    desc: Run tests with verbose output
+    cmd: npm run test-verbose
+
+  # --- Code quality ---
+  lint:
+    desc: Check code with ESLint
+    cmd: npm run lint
+
+  lint-fix:
+    desc: Auto-fix lint issues with ESLint
+    cmd: npm run lint-fix
+
+  format-check:
+    desc: Check code formatting with Prettier
+    cmd: npm run format-check
+
+  check:
+    desc: Run all code quality checks (ESLint + Prettier)
+    cmds:
+      - task: lint
+      - task: format-check
+
+  fix:
+    desc: Auto-fix formatting and lint issues (Prettier + ESLint)
+    cmds:
+      - npm run format
+      - npm run lint-fix
