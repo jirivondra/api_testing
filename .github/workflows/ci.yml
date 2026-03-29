@@ -1,13 +1,11 @@
 name: CI
 
 on:
-  push:
   pull_request:
 
 jobs:
   code-quality:
     name: Code quality (ESLint + Prettier)
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -33,7 +31,6 @@ jobs:
 
   run-tests:
     name: Tests
-    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     env:
       API_USERNAME: ${{ secrets.API_USERNAME }}
