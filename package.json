@@ -20,6 +20,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jest": "^29.15.0",
     "jest": "^29.7.0",
+    "jiti": "^2.6.1",
     "joi": "^17.13.3",
     "pactum": "^3.9.1",
     "prettier": "^3.8.1",
