@@ -35,6 +35,9 @@ jobs:
     name: Tests
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    env:
+      API_USERNAME: ${{ secrets.API_USERNAME }}
+      API_PASSWORD: ${{ secrets.API_PASSWORD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -60,12 +63,6 @@ jobs:
 
       - name: Start API
         run: uvicorn api.main:app --host 0.0.0.0 --port 8000 &
-        env:
-          API_USERNAME: ${{ secrets.API_USERNAME }}
-          API_PASSWORD: ${{ secrets.API_PASSWORD }}
 
       - name: Run tests
         run: task run-test
-        env:
-          API_USERNAME: ${{ secrets.API_USERNAME }}
-          API_PASSWORD: ${{ secrets.API_PASSWORD }}
