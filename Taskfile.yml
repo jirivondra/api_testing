@@ -24,6 +24,10 @@ tasks:
     desc: Remove Python cache files
     cmd: find . -type d -name __pycache__ -exec rm -rf {} +
 
+  stop-api:
+    desc: Stop the running API
+    cmd: pkill -f "uvicorn api.main:app" || true
+
   restart:
     desc: Clean cache and restart the API
     cmds:
