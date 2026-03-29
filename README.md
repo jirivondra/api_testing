@@ -38,6 +38,8 @@ npm install
 
 # Python dependencies
 pip install -r api/requirements.txt
+# or if pip is not found
+pip3 install -r api/requirements.txt
 ```
 
 ### 2. Configure environment
@@ -103,6 +105,12 @@ API_URL=http://localhost:9000 task run-test
 | `task format-check` | Check code formatting with Prettier |
 | `task check`        | Run all checks (ESLint + Prettier)  |
 | `task fix`          | Auto-fix formatting and lint issues |
+| `task clean`        | Remove Python cache files           |
+| `task restart`      | Clean cache and restart the API     |
+
+## Documentation
+
+Interactive API documentation (Swagger UI) is available at `http://localhost:8000/docs` when the API is running. It is protected by the same HTTP Basic Auth as the API endpoints — the browser will show a login popup on first access.
 
 ## Authentication
 

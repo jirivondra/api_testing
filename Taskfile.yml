@@ -19,6 +19,17 @@ tasks:
     desc: Run tests with verbose output
     cmd: npm run test-verbose
 
+  # --- Utilities ---
+  clean:
+    desc: Remove Python cache files
+    cmd: find . -type d -name __pycache__ -exec rm -rf {} +
+
+  restart:
+    desc: Clean cache and restart the API
+    cmds:
+      - task: clean
+      - task: run-api
+
   # --- Code quality ---
   lint:
     desc: Check code with ESLint
