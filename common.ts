@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import pactum from 'pactum'
 import { ApiResponse } from './ApiResponse.js'
 
