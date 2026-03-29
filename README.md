@@ -39,7 +39,24 @@ npm install
 pip install -r api/requirements.txt
 ```
 
-### 2. Install Task
+### 2. Configure environment
+
+Copy the environment file and fill in your credentials:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env`:
+
+```
+API_USERNAME=your-username
+API_PASSWORD=your-password
+```
+
+The `.env` file is gitignored and never committed to the repository. Both the API and the test suite read credentials from this file at runtime.
+
+### 3. Install Task
 
 This project uses [Task](https://taskfile.dev) as a task runner. Install it via:
 
@@ -92,7 +109,19 @@ API_URL=http://localhost:9000 task run-test
 | `task check`        | Run all checks (ESLint + Prettier)  |
 | `task fix`          | Auto-fix formatting and lint issues |
 
+## Authentication
+
+The API uses HTTP Basic Auth. Every request must include an `Authorization` header:
+
+```
+Authorization: Basic <base64(username:password)>
+```
+
+Credentials are configured via `.env`. The test suite sends them automatically with every request.
+
 ## API endpoints
+
+All endpoints require authentication.
 
 | Method | Endpoint     | Description       |
 | ------ | ------------ | ----------------- |
