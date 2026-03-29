@@ -61,6 +61,11 @@ jobs:
           rm -f package-lock.json && npm install
           pip install -r api/requirements.txt
 
+      - name: Debug secrets
+        run: |
+          echo "API_USERNAME is set: $([[ -n "$API_USERNAME" ]] && echo YES || echo NO)"
+          echo "API_PASSWORD is set: $([[ -n "$API_PASSWORD" ]] && echo YES || echo NO)"
+
       - name: Start API
         run: uvicorn api.main:app --host 0.0.0.0 --port 8000 &
 
