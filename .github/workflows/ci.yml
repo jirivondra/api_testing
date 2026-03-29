@@ -1,13 +1,11 @@
 name: CI
 
 on:
-  push:
   pull_request:
 
 jobs:
   code-quality:
     name: Code quality (ESLint + Prettier)
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -33,8 +31,10 @@ jobs:
 
   run-tests:
     name: Tests
-    if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    env:
+      API_USERNAME: ${{ secrets.API_USERNAME }}
+      API_PASSWORD: ${{ secrets.API_PASSWORD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -57,6 +57,11 @@ jobs:
         run: |
           rm -f package-lock.json && npm install
           pip install -r api/requirements.txt
+
+      - name: Create .env file
+        run: |
+          echo "API_USERNAME=${{ secrets.API_USERNAME }}" > .env
+          echo "API_PASSWORD=${{ secrets.API_PASSWORD }}" >> .env
 
       - name: Start API
         run: uvicorn api.main:app --host 0.0.0.0 --port 8000 &
