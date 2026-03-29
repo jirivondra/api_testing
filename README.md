@@ -10,6 +10,7 @@ A showcase of integration testing for a custom REST API. The project includes a 
 | Test runner       | Jest            |
 | HTTP requests     | Pactum          |
 | Schema validation | Joi             |
+| Language          | TypeScript      |
 
 ## Project structure
 
@@ -41,13 +42,7 @@ pip install -r api/requirements.txt
 
 ### 2. Configure environment
 
-Copy the environment file and fill in your credentials:
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env`:
+Create a `.env` file in the project root:
 
 ```
 API_USERNAME=your-username
