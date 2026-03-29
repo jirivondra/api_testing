@@ -1,5 +1,7 @@
-from fastapi import FastAPI, HTTPException, Depends
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi import FastAPI, HTTPException, Depends, Request
+from fastapi.security import HTTPBasic
+from fastapi.openapi.docs import get_swagger_ui_html
+from fastapi.openapi.utils import get_openapi
 from pydantic import BaseModel
 from typing import Optional
 import uvicorn
@@ -9,7 +11,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-app = FastAPI(title="TODO API", version="1.0.0")
+app = FastAPI(title="TODO API", version="1.0.0", docs_url=None, openapi_url=None)
 security = HTTPBasic()
 
 API_USERNAME = os.getenv("API_USERNAME")
@@ -35,11 +37,30 @@ class TodoUpdate(BaseModel):
     completed: Optional[bool] = None
 
 
-def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
-    correct_username = secrets.compare_digest(credentials.username, API_USERNAME)
-    correct_password = secrets.compare_digest(credentials.password, API_PASSWORD)
-    if not (correct_username and correct_password):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
+def authenticate(request: Request):
+    auth_error = HTTPException(
+        status_code=401,
+        detail="Authentication required",
+        headers={"WWW-Authenticate": "Basic"},
+    )
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Basic "):
+        raise auth_error
+    import base64
+    decoded = base64.b64decode(auth_header[6:]).decode("utf-8")
+    username, _, password = decoded.partition(":")
+    if not secrets.compare_digest(username, API_USERNAME) or not secrets.compare_digest(password, API_PASSWORD):
+        raise auth_error
+
+
+@app.get("/docs", include_in_schema=False)
+def get_docs(_=Depends(authenticate)):
+    return get_swagger_ui_html(openapi_url="/openapi.json", title="TODO API")
+
+
+@app.get("/openapi.json", include_in_schema=False)
+def get_openapi_schema(_=Depends(authenticate)):
+    return get_openapi(title=app.title, version=app.version, routes=app.routes)
 
 
 @app.get("/todos", summary="Get all TODOs")
