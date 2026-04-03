@@ -1,11 +1,6 @@
 version: '3'
 
 tasks:
-  # --- API ---
-  run-api:
-    desc: Start the FastAPI backend
-    cmd: uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
-
   # --- Tests ---
   run-test:
     desc: Run all tests
@@ -18,21 +13,6 @@ tasks:
   test-result:
     desc: Run tests with verbose output
     cmd: npm run test-verbose
-
-  # --- Utilities ---
-  clean:
-    desc: Remove Python cache files
-    cmd: find . -type d -name __pycache__ -exec rm -rf {} +
-
-  stop-api:
-    desc: Stop the running API
-    cmd: pkill -f "uvicorn api.main:app" || true
-
-  restart:
-    desc: Clean cache and restart the API
-    cmds:
-      - task: clean
-      - task: run-api
 
   # --- Code quality ---
   lint:
