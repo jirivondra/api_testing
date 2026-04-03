@@ -1,31 +1,30 @@
 # TODO API – Integration Tests
 
-A showcase of integration testing for a custom REST API. The project includes a FastAPI backend and a test suite built on Jest, Pactum and Joi.
+Integration tests for the REST API of the [TODO_app](https://github.com/jirivondra/TODO_app) project. The test suite is built on Jest, Pactum and Joi.
+
+> **Note:** This project contains only tests. The API itself lives in the [TODO_app](https://github.com/jirivondra/TODO_app) repository — it must be running before you execute the tests.
 
 ## Stack
 
-| Layer             | Technology      |
-| ----------------- | --------------- |
-| API               | Python, FastAPI |
-| Test runner       | Jest            |
-| HTTP requests     | Pactum          |
-| Schema validation | Joi             |
-| Language          | TypeScript      |
+| Layer             | Technology |
+| ----------------- | ---------- |
+| Test runner       | Jest       |
+| HTTP requests     | Pactum     |
+| Schema validation | Joi        |
+| Language          | TypeScript |
 
 ## Project structure
 
 ```
-├── api/
-│   ├── main.py           # FastAPI TODO API
-│   └── requirements.txt
-└── tests/
-    ├── pages/
-    │   └── TodoPage.ts   # Page Object – HTTP methods + fluent assertions
-    ├── ApiResponse.ts    # Fluent wrapper for HTTP responses
-    ├── common.ts         # makeRequest – shared HTTP calls via Pactum
-    ├── schemas.ts        # Joi schemas for response validation
-    ├── utils.ts          # buildUrl helper
-    └── todo.test.ts      # Integration tests
+├── tests/
+│   └── todo.test.ts      # Integration tests
+├── page-objects/
+│   └── TodoPage.ts       # Page Object – HTTP methods + fluent assertions
+├── schemas/
+│   └── schemas.ts        # Joi schemas for response validation
+├── ApiResponse.ts        # Fluent wrapper for HTTP responses
+├── common.ts             # makeRequest – shared HTTP calls via Pactum
+└── utils.ts              # buildUrl helper
 ```
 
 ## Setup
@@ -33,13 +32,7 @@ A showcase of integration testing for a custom REST API. The project includes a 
 ### 1. Install dependencies
 
 ```bash
-# Node.js dependencies
 npm install
-
-# Python dependencies
-pip install -r api/requirements.txt
-# or if pip is not found
-pip3 install -r api/requirements.txt
 ```
 
 ### 2. Configure environment
@@ -47,11 +40,12 @@ pip3 install -r api/requirements.txt
 Create a `.env` file in the project root:
 
 ```
+API_URL=http://localhost:8000
 API_USERNAME=your-username
 API_PASSWORD=your-password
 ```
 
-The `.env` file is gitignored and never committed to the repository. Both the API and the test suite read credentials from this file at runtime.
+The `.env` file is gitignored and never committed. The test suite reads credentials and the API URL from this file at runtime.
 
 ### 3. Install Task
 
@@ -68,17 +62,9 @@ winget install Task.Task
 sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
 ```
 
-## Running the project
+## Running the tests
 
-### Start the API
-
-```bash
-task run-api
-```
-
-The API runs on `http://localhost:8000`. Swagger docs are available at `http://localhost:8000/docs`.
-
-### Run tests
+Start the TODO_app API first, then run:
 
 ```bash
 task run-test          # run all tests
@@ -96,7 +82,6 @@ API_URL=http://localhost:9000 task run-test
 
 | Command             | Description                         |
 | ------------------- | ----------------------------------- |
-| `task run-api`      | Start the FastAPI backend           |
 | `task run-test`     | Run all tests                       |
 | `task test-watch`   | Run tests in watch mode             |
 | `task test-result`  | Run tests with verbose output       |
@@ -105,12 +90,6 @@ API_URL=http://localhost:9000 task run-test
 | `task format-check` | Check code formatting with Prettier |
 | `task check`        | Run all checks (ESLint + Prettier)  |
 | `task fix`          | Auto-fix formatting and lint issues |
-| `task clean`        | Remove Python cache files           |
-| `task restart`      | Clean cache and restart the API     |
-
-## Documentation
-
-Interactive API documentation (Swagger UI) is available at `http://localhost:8000/docs` when the API is running. It is protected by the same HTTP Basic Auth as the API endpoints — the browser will show a login popup on first access.
 
 ## Authentication
 
